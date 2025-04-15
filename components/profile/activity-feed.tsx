@@ -107,7 +107,7 @@ export function ActivityFeed({ userId }: ActivityFeedProps) {
   return (
     <div className="space-y-4">
       {activities.map((activity) => (
-        <div key={activity.id} className="flex items-start gap-4 p-4 rounded-lg border bg-card">
+        <div key={activity.id} className="p-4 rounded-lg bg-background/30 backdrop-blur-sm border border-border/50">
           <Avatar>
             <AvatarImage src={activity.media.poster_url} />
             <AvatarFallback>{activity.media.title[0]}</AvatarFallback>

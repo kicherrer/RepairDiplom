@@ -92,13 +92,6 @@ export default function WatchPage() {
   const [userRating, setUserRating] = useState<number | null>(null)
   const [watchStatus, setWatchStatus] = useState<string | null>(null)
 
-  const getBunnyVideoUrl = (url: string) => {
-    if (!url) return '';
-    const libraryId = process.env.NEXT_PUBLIC_BUNNY_LIBRARY_ID;
-    const videoId = url.split('/').pop()?.split('.')[0];
-    return `https://iframe.mediadelivery.net/embed/${libraryId}/${videoId}`;
-  };
-
   const fetchMediaData = useCallback(async () => {
     try {
       // First fetch media data without comments
@@ -362,227 +355,236 @@ export default function WatchPage() {
     : 0
 
   return (
-    <div className="min-h-screen bg-black/95">
-      {/* Hero Section with Video Background */}
-      <div className="relative h-[75vh] w-full">
-        {/* Video/Image Background */}
-        <div className="absolute inset-0">
-          {media.video_url ? (
-            <div className="w-full h-full relative">
-              <iframe
-                src={getBunnyVideoUrl(media.video_url) + '?autoplay=1&muted=1&loop=1'}
-                className="w-full h-full object-cover"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-            </div>
-          ) : (
-            <>
-              <Image
-                src={media.poster_url || '/placeholder-image.jpg'}
-                alt={media.title}
-                fill
-                priority
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
-            </>
-          )}
-        </div>
+    <div className="min-h-screen">
+      {/* Animated gradient background */}
+      <div className="fixed inset-0">
+        <div className="absolute inset-0 animate-gradient bg-gradient-to-br from-orange-500 via-purple-500 to-blue-500 opacity-20" />
+      </div>
 
-        {/* Content */}
-        <div className="relative container h-full pt-24">
-          <div className="flex h-full items-end pb-20">
-            <div className="flex gap-8 items-end max-w-6xl">
-              {/* Poster */}
-              <div className="hidden md:block w-72 flex-shrink-0">
-                <div className="aspect-[2/3] relative rounded-lg overflow-hidden shadow-2xl">
-                  <Image
-                    src={media.poster_url || '/placeholder-image.jpg'}
-                    alt={media.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
+      {/* Content */}
+      <div className="relative">
+        {/* Hero Section with Video Background */}
+        <div className="relative h-[75vh] w-full">
+          {/* Video/Image Background */}
+          <div className="absolute inset-0">
+            {media.video_url ? (
+              <div className="w-full h-full relative">
+                <video
+                  src={media.video_url}
+                  className="w-full h-full object-cover"
+                  controls
+                  autoPlay
+                  muted
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
               </div>
+            ) : (
+              <>
+                <Image
+                  src={media.poster_url || '/placeholder-image.jpg'}
+                  alt={media.title}
+                  fill
+                  priority
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
+              </>
+            )}
+          </div>
 
-              {/* Info */}
-              <div className="flex-1 text-white space-y-6">
-                <div>
-                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-3">
-                    {media.title}
-                  </h1>
-                  {media.original_title && (
-                    <h2 className="text-2xl text-white/70">{media.original_title}</h2>
-                  )}
-                </div>
-
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-lg">
-                  <div className="flex items-center gap-2">
-                    <StarRating value={averageRating} readOnly size="lg" />
-                    <span className="font-semibold">{averageRating.toFixed(1)}</span>
-                    <span className="text-white/60">({ratings.length})</span>
+          {/* Content */}
+          <div className="relative container h-full pt-24">
+            <div className="flex h-full items-end pb-20">
+              <div className="flex gap-8 items-end max-w-6xl">
+                {/* Poster */}
+                <div className="hidden md:block w-72 flex-shrink-0">
+                  <div className="aspect-[2/3] relative rounded-lg overflow-hidden shadow-2xl">
+                    <Image
+                      src={media.poster_url || '/placeholder-image.jpg'}
+                      alt={media.title}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
                   </div>
-                  <div className="text-white/80">{media.year}</div>
-                  <div className="text-white/80">{media.duration} {t('media.minutes')}</div>
-                  <div className="text-white/80">{t(`media.types.${media.type}`)}</div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {media.media_genres?.map((mg: MediaGenre) => (
-                    <Badge 
-                      key={mg.genres.id} 
-                      variant="outline"
-                      className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20"
+                {/* Info */}
+                <div className="flex-1 text-white space-y-6">
+                  <div>
+                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-3">
+                      {media.title}
+                    </h1>
+                    {media.original_title && (
+                      <h2 className="text-2xl text-white/70">{media.original_title}</h2>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-lg">
+                    <div className="flex items-center gap-2">
+                      <StarRating value={averageRating} readOnly size="lg" />
+                      <span className="font-semibold">{averageRating.toFixed(1)}</span>
+                      <span className="text-white/60">({ratings.length})</span>
+                    </div>
+                    <div className="text-white/80">{media.year}</div>
+                    <div className="text-white/80">{media.duration} {t('media.minutes')}</div>
+                    <div className="text-white/80">{t(`media.types.${media.type}`)}</div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {media.media_genres?.map((mg: MediaGenre) => (
+                      <Badge 
+                        key={mg.genres.id} 
+                        variant="outline"
+                        className="px-3 py-1 text-sm bg-white/10 hover:bg-white/20"
+                      >
+                        {i18n.language === 'ru' ? mg.genres.name_ru : mg.genres.name}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <div className="max-w-2xl text-lg/relaxed text-white/80">
+                    {media.description}
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    <Button
+                      size="lg"
+                      className="bg-orange-500 hover:bg-orange-600 text-white"
+                      onClick={logWatchActivity}
                     >
-                      {i18n.language === 'ru' ? mg.genres.name_ru : mg.genres.name}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="max-w-2xl text-lg/relaxed text-white/80">
-                  {media.description}
-                </div>
-
-                <div className="flex gap-4 pt-4">
-                  <Button
-                    size="lg"
-                    className="bg-orange-500 hover:bg-orange-600 text-white"
-                    onClick={logWatchActivity}
-                  >
-                    <Play className="h-5 w-5 mr-2" />
-                    {t('watch.watchNow')}
-                  </Button>
+                      <Play className="h-5 w-5 mr-2" />
+                      {t('watch.watchNow')}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="bg-background">
-        <div className="container py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl">
-            {/* Left Column */}
-            <div className="lg:col-span-2 space-y-12">
-              {/* About */}
-              <section>
-                <h2 className="text-2xl font-semibold mb-6">{t('watch.about')}</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                  <div>
-                    <h3 className="text-sm text-muted-foreground mb-2">{t('watch.year')}</h3>
-                    <p className="text-lg">{media.year}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm text-muted-foreground mb-2">{t('watch.duration')}</h3>
-                    <p className="text-lg">{media.duration} {t('media.minutes')}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm text-muted-foreground mb-2">{t('watch.rating')}</h3>
-                    <p className="text-lg">{averageRating.toFixed(1)} / 5.0</p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Cast & Crew */}
-              {(actors.length > 0 || directors.length > 0) && (
+        {/* Main Content */}
+        <div className="bg-background">
+          <div className="container py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl">
+              {/* Left Column */}
+              <div className="lg:col-span-2 space-y-12">
+                {/* About */}
                 <section>
-                  <h2 className="text-2xl font-semibold mb-6">{t('watch.castAndCrew')}</h2>
-                  
-                  {directors.length > 0 && (
-                    <div className="mb-8">
-                      <h3 className="text-lg font-medium mb-4">{t('watch.directors')}</h3>
-                      <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
-                        {directors.map((director: any) => (
-                          <div key={director.persons?.id} className="flex-shrink-0 w-32 text-center">
-                            <Avatar className="w-24 h-24 mx-auto mb-2">
-                              <AvatarImage src={director.persons?.photo_url} />
-                              <AvatarFallback>{director.persons?.name?.[0]}</AvatarFallback>
-                            </Avatar>
-                            <div className="text-sm font-medium">{director.persons?.name}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {actors.length > 0 && (
+                  <h2 className="text-2xl font-semibold mb-6">{t('watch.about')}</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                     <div>
-                      <h3 className="text-lg font-medium mb-4">{t('watch.cast')}</h3>
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {actors.map((actor: any) => (
-                          <div key={actor.persons?.id} className="flex-shrink-0 w-32 text-center">
-                            <Avatar className="w-24 h-24 mx-auto mb-2">
-                              <AvatarImage src={actor.persons?.photo_url} />
-                              <AvatarFallback>{actor.persons?.name?.[0]}</AvatarFallback>
-                            </Avatar>
-                            <div className="text-sm font-medium">{actor.persons?.name}</div>
-                            <div className="text-xs text-muted-foreground">{actor.character_name}</div>
-                          </div>
-                        ))}
-                      </div>
+                      <h3 className="text-sm text-muted-foreground mb-2">{t('watch.year')}</h3>
+                      <p className="text-lg">{media.year}</p>
                     </div>
-                  )}
+                    <div>
+                      <h3 className="text-sm text-muted-foreground mb-2">{t('watch.duration')}</h3>
+                      <p className="text-lg">{media.duration} {t('media.minutes')}</p>
+                    </div>
+                    <div>
+                      <h3 className="text-sm text-muted-foreground mb-2">{t('watch.rating')}</h3>
+                      <p className="text-lg">{averageRating.toFixed(1)} / 5.0</p>
+                    </div>
+                  </div>
                 </section>
-              )}
 
-              {/* Comments */}
-              <section>
-                <CommentSection mediaId={id || ''} />
-              </section>
-            </div>
-
-            {/* Right Column */}
-            <div className="space-y-6">
-              <Card className="bg-card/50 backdrop-blur">
-                <CardHeader>
-                  <CardTitle>{t('watch.yourRating')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col items-center gap-4">
-                    <StarRating
-                      value={userRating || 0}
-                      onChange={handleRate}
-                      size="lg"
-                    />
-                    {userRating ? (
-                      <div className="text-center">
-                        <div className="text-2xl font-bold">{userRating.toFixed(1)}</div>
-                        <div className="text-sm text-muted-foreground">{t('watch.yourScore')}</div>
-                      </div>
-                    ) : (
-                      <div className="text-sm text-muted-foreground text-center">
-                        {t('watch.rateThis')}
+                {/* Cast & Crew */}
+                {(actors.length > 0 || directors.length > 0) && (
+                  <section>
+                    <h2 className="text-2xl font-semibold mb-6">{t('watch.castAndCrew')}</h2>
+                    
+                    {directors.length > 0 && (
+                      <div className="mb-8">
+                        <h3 className="text-lg font-medium mb-4">{t('watch.directors')}</h3>
+                        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+                          {directors.map((director: any) => (
+                            <div key={director.persons?.id} className="flex-shrink-0 w-32 text-center">
+                              <Avatar className="w-24 h-24 mx-auto mb-2">
+                                <AvatarImage src={director.persons?.photo_url} />
+                                <AvatarFallback>{director.persons?.name?.[0]}</AvatarFallback>
+                              </Avatar>
+                              <div className="text-sm font-medium">{director.persons?.name}</div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
 
-              {/* Watch Status Card */}
-              <Card className="bg-card/50 backdrop-blur">
-                <CardHeader>
-                  <CardTitle>{t('watch.watchStatus.title')}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {['watching', 'plan_to_watch', 'completed'].map((status) => (
-                    <Button
-                      key={status}
-                      variant={watchStatus === status ? 'default' : 'outline'}
-                      className="w-full justify-start"
-                      onClick={() => updateWatchStatus(status)}
-                    >
-                      {status === 'watching' && <Play className="h-4 w-4 mr-2" />}
-                      {status === 'plan_to_watch' && <Book className="h-4 w-4 mr-2" />}
-                      {status === 'completed' && <CheckCircle className="h-4 w-4 mr-2" />}
-                      {t(`watch.watchStatus.${status}`)}
-                    </Button>
-                  ))}
-                </CardContent>
-              </Card>
+                    {actors.length > 0 && (
+                      <div>
+                        <h3 className="text-lg font-medium mb-4">{t('watch.cast')}</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                          {actors.map((actor: any) => (
+                            <div key={actor.persons?.id} className="flex-shrink-0 w-32 text-center">
+                              <Avatar className="w-24 h-24 mx-auto mb-2">
+                                <AvatarImage src={actor.persons?.photo_url} />
+                                <AvatarFallback>{actor.persons?.name?.[0]}</AvatarFallback>
+                              </Avatar>
+                              <div className="text-sm font-medium">{actor.persons?.name}</div>
+                              <div className="text-xs text-muted-foreground">{actor.character_name}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                {/* Comments */}
+                <section>
+                  <CommentSection mediaId={id || ''} />
+                </section>
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
+                <Card className="bg-card/50 backdrop-blur">
+                  <CardHeader>
+                    <CardTitle>{t('watch.yourRating')}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-col items-center gap-4">
+                      <StarRating
+                        value={userRating || 0}
+                        onChange={handleRate}
+                        size="lg"
+                      />
+                      {userRating ? (
+                        <div className="text-center">
+                          <div className="text-2xl font-bold">{userRating.toFixed(1)}</div>
+                          <div className="text-sm text-muted-foreground">{t('watch.yourScore')}</div>
+                        </div>
+                      ) : (
+                        <div className="text-sm text-muted-foreground text-center">
+                          {t('watch.rateThis')}
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Watch Status Card */}
+                <Card className="bg-card/50 backdrop-blur">
+                  <CardHeader>
+                    <CardTitle>{t('watch.watchStatus.title')}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    {['watching', 'plan_to_watch', 'completed'].map((status) => (
+                      <Button
+                        key={status}
+                        variant={watchStatus === status ? 'default' : 'outline'}
+                        className="w-full justify-start"
+                        onClick={() => updateWatchStatus(status)}
+                      >
+                        {status === 'watching' && <Play className="h-4 w-4 mr-2" />}
+                        {status === 'plan_to_watch' && <Book className="h-4 w-4 mr-2" />}
+                        {status === 'completed' && <CheckCircle className="h-4 w-4 mr-2" />}
+                        {t(`watch.watchStatus.${status}`)}
+                      </Button>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>

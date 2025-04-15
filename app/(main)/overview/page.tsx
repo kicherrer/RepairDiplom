@@ -18,6 +18,7 @@ import { StarRating } from '@/components/star-rating';
 import { useRouter } from 'next/navigation';
 import { RefreshCcw } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
+import { Button } from '@/components/ui/button';
 
 interface Genre {
   id: string;
@@ -290,128 +291,182 @@ export default function OverviewPage() {
     return <div>Error: {error.message}</div>;
   }
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative h-[70vh] overflow-hidden">
+  function HeroSection() {
+    return (
+      <div className="relative h-[80vh] w-full overflow-hidden">
+        {/* Video Background */}
         <div className="absolute inset-0">
-          {/* Заменяем видео на градиент */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-background" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="https://your-video-url.mp4" type="video/mp4" />
+          </video>
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
         </div>
-        
+  
+        {/* Content */}
         <div className="relative container h-full flex items-center">
-          <div className="max-w-2xl space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold text-white">
-              {t('overview.hero.title')}
+          <div className="max-w-2xl space-y-4">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
+              {t('hero.title')}
             </h1>
-            <p className="text-xl text-white/80">
-              {t('overview.hero.subtitle')}
+            <p className="text-lg md:text-xl text-white/80">
+              {t('hero.description')}
             </p>
-            
-            {/* Search Bar */}
-            <div className="flex gap-4 bg-white/10 backdrop-blur-lg p-1 rounded-lg">
-              <Input
-                placeholder={t('overview.searchPlaceholder')}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="bg-transparent border-none text-white placeholder:text-white/60"
-              />
+            <div className="flex gap-4">
+              <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white">
+                {t('hero.primaryButton')}
+              </Button>
+              <Button size="lg" variant="outline" className="bg-background/20 backdrop-blur-sm">
+                {t('hero.secondaryButton')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const getBunnyVideoUrl = (videoId: string) => {
+    const libraryId = process.env.NEXT_PUBLIC_BUNNY_LIBRARY_ID;
+    return `https://iframe.mediadelivery.net/embed/${libraryId}/${videoId}`;
+  };
+
+  return (
+    <div>
+      {/* Hero Section */}
+      <div className="relative h-[70vh] overflow-hidden">
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 animate-gradient bg-gradient-to-br from-orange-500 via-purple-500 to-blue-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative container h-full">
+          <div className="flex h-full items-center">
+            <div className="max-w-3xl space-y-6">
+              <h1 className="text-4xl md:text-6xl font-bold text-white">
+                {t('overview.hero.title')}
+              </h1>
+              <p className="text-lg md:text-xl text-white/80">
+                {t('overview.hero.description')}
+              </p>
+              
+              {/* Search Bar integrated into hero */}
+              <div className="flex gap-4 max-w-2xl">
+                <div className="flex-1 flex gap-4 bg-white/10 backdrop-blur-lg p-2 rounded-lg">
+                  <Input
+                    placeholder={t('overview.searchPlaceholder')}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="bg-transparent border-none text-white placeholder:text-white/60"
+                  />
+                  <Select
+                    value={selectedGenre}
+                    onValueChange={setSelectedGenre}
+                  >
+                    <SelectTrigger className="w-[180px] bg-transparent border-none text-white">
+                      <SelectValue placeholder={t('overview.selectGenre')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('overview.allGenres')}</SelectItem>
+                      {genres.map((genre) => (
+                        <SelectItem key={genre.id} value={genre.id}>
+                          {i18n.language === 'ru' ? genre.name_ru : genre.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="min-h-screen bg-background">
+        <div className="container py-6 space-y-8"> {/* Изменили py-12 на py-6 и space-y-12 на space-y-8 */}
+          {/* Featured Section */}
+          <section>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold">{t('overview.featured')}</h2>
               <Select
                 value={selectedGenre}
                 onValueChange={setSelectedGenre}
               >
-                <SelectTrigger className="w-[180px] bg-transparent border-none text-white">
-                  <SelectValue placeholder={t('overview.selectGenre')} />
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder={t('overview.filter')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t('overview.allGenres')}</SelectItem>
-                  {genres.map((genre) => (
-                    <SelectItem key={genre.id} value={genre.id}>
-                      {i18n.language === 'ru' ? genre.name_ru : genre.name}
-                    </SelectItem>
-                  ))}
+                  <SelectItem value="all">{t('overview.allTypes')}</SelectItem>
+                  <SelectItem value="movie">{t('media.types.movie')}</SelectItem>
+                  <SelectItem value="tv">{t('media.types.tv')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Content Sections */}
-      <div className="container py-12 space-y-12">
-        {/* Featured Section */}
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">{t('overview.featured')}</h2>
-            <Select
-              value={selectedGenre}
-              onValueChange={setSelectedGenre}
-            >
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder={t('overview.filter')} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t('overview.allTypes')}</SelectItem>
-                <SelectItem value="movie">{t('media.types.movie')}</SelectItem>
-                <SelectItem value="tv">{t('media.types.tv')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-            {filteredItems.map((item: MediaItem) => (
-              <div
-                key={item.id}
-                className="group relative cursor-pointer"
-                onClick={() => handleItemClick(item.id)}
-              >
-                <div className="aspect-[2/3] rounded-lg overflow-hidden">
-                  <Image
-                    src={item.poster_url || '/placeholder-image.jpg'}
-                    alt={item.title}
-                    fill
-                    className="object-cover transform transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="absolute bottom-0 p-4 space-y-2">
-                      <h3 className="text-white font-medium line-clamp-2">{item.title}</h3>
-                      <div className="flex items-center gap-2">
-                        <StarRating 
-                          value={item.media_ratings?.length 
-                            ? item.media_ratings.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / item.media_ratings.length 
-                            : 0
-                          } 
-                          readOnly 
-                          size="sm" 
-                        />
-                        <span className="text-xs text-white/80">
-                          ({item.media_ratings?.length || 0})
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-white/60">
-                        <span>{item.year}</span>
-                        <span>•</span>
-                        <span>{t(`media.types.${item.type}`)}</span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+              {filteredItems.map((item: MediaItem) => (
+                <div
+                  key={item.id}
+                  className="group relative cursor-pointer"
+                  onClick={() => handleItemClick(item.id)}
+                >
+                  <div className="aspect-[2/3] rounded-lg overflow-hidden">
+                    <Image
+                      src={item.poster_url || '/placeholder-image.jpg'}
+                      alt={item.title}
+                      fill
+                      className="object-cover transform transition-transform group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute bottom-0 p-4 space-y-2">
+                        <h3 className="text-white font-medium line-clamp-2">{item.title}</h3>
+                        <div className="flex items-center gap-2">
+                          <StarRating 
+                            value={item.media_ratings?.length 
+                              ? item.media_ratings.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / item.media_ratings.length 
+                              : 0
+                            } 
+                            readOnly 
+                            size="sm" 
+                          />
+                          <span className="text-xs text-white/80">
+                            ({item.media_ratings?.length || 0})
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-white/60">
+                          <span>{item.year}</span>
+                          <span>•</span>
+                          <span>{t(`media.types.${item.type}`)}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        {/* Continue Watching */}
-        <section className="pt-8">
-          <h2 className="text-2xl font-semibold mb-6">{t('overview.continueWatching')}</h2>
-          {/* Add your continue watching content */}
-        </section>
+          {/* Continue Watching */}
+          <section className="pt-4"> {/* Изменили pt-8 на pt-4 */}
+            <h2 className="text-2xl font-semibold mb-6">{t('overview.continueWatching')}</h2>
+            {/* Add your continue watching content */}
+          </section>
 
-        {/* Recommendations */}
-        <section className="pt-8">
-          <h2 className="text-2xl font-semibold mb-6">{t('overview.recommended')}</h2>
-          {/* Add your recommendations content */}
-        </section>
+          {/* Recommendations */}
+          <section className="pt-4"> {/* Изменили pt-8 на pt-4 */}
+            <h2 className="text-2xl font-semibold mb-6">{t('overview.recommended')}</h2>
+            {/* Add your recommendations content */}
+          </section>
+        </div>
       </div>
     </div>
   );

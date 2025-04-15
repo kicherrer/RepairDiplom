@@ -455,9 +455,13 @@
   },
   "overview": {
     "hero": {
-      "title": "Welcome to Movie Library",
-      "subtitle": "Discover your next favorite movie or TV show"
+      "title": "Welcome to Media Library",
+      "description": "Discover and track your favorite movies and TV shows",
+      "cta": "Start Exploring"
     },
+    "searchPlaceholder": "Search media...",
+    "selectGenre": "Select genre",
+    "allGenres": "All genres",
     "featured": "Featured",
     "allTypes": "All Types",
     "continueWatching": "Continue Watching",

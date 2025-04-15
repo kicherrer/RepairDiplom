@@ -65,35 +65,45 @@ export default function Navigation() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
-        <div className="mr-4 flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <motion.div
-              whileHover={{ rotate: 10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <FilmIcon className="h-6 w-6 text-primary" />
-            </motion.div>
-            <span className="font-bold">{t('navigation.home')}</span>
+        <div className="mr-8 flex items-center">
+          <Link href="/overview" className="flex items-center gap-2 mr-8">
+            <FilmIcon className="h-6 w-6 text-white" />
+            <span className="text-lg font-semibold text-white">MediaVault</span>
           </Link>
+          
           <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
               href="/overview"
-              className={pathname === '/overview' ? 'text-foreground' : 'text-foreground/60'}
+              className={`text-lg font-bold transition-colors ${
+                pathname === '/overview' 
+                  ? 'text-white' 
+                  : 'text-foreground/60 hover:text-white'
+              }`}
             >
               {t('navigation.overview')}
             </Link>
             <Link
-              href="/admin"
-              className={pathname === '/admin' ? 'text-foreground' : 'text-foreground/60'}
-            >
-              {t('navigation.admin')}
-            </Link>
-            <Link
-              href="/profile"  // этот путь правильный, так как Next.js разрешает его в /(main)/profile
-              className={pathname === '/profile' ? 'text-foreground' : 'text-foreground/60'}
+              href="/profile"
+              className={`text-lg font-bold transition-colors ${
+                pathname === '/profile' 
+                  ? 'text-white' 
+                  : 'text-foreground/60 hover:text-white'
+              }`}
             >
               {t('navigation.profile')}
             </Link>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className={`text-lg font-bold transition-colors ${
+                  pathname === '/admin' 
+                    ? 'text-white' 
+                    : 'text-foreground/60 hover:text-white'
+                }`}
+              >
+                {t('navigation.admin')}
+              </Link>
+            )}
           </nav>
         </div>
         <div className="ml-auto flex items-center space-x-2">

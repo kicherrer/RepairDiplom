@@ -85,3 +85,14 @@
 input[type="file"]::file-selector-button {
   @apply mr-4 py-2 px-4 rounded-full border-0 text-sm font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition-colors;
 }
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}

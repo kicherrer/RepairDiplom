@@ -1,10 +1,10 @@
-'use client';
+"use client"
 
+// Добавляем импорт ActivityFeed
+import { ActivityFeed } from '@/components/profile/activity-feed'
+import { User as AuthUser } from '@supabase/supabase-js'
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { User as AuthUser } from '@supabase/supabase-js'
-import { ActivityFeed } from '@/components/profile/activity-feed'
-import { Watchlist } from '@/components/profile/watchlist'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -27,8 +27,9 @@ import {
   Palette, Badge as BadgeIcon, Link as LinkIcon, Settings, 
   Sparkles, Zap, Brush, RefreshCw, Bookmark
 } from "lucide-react"
+import { Watchlist } from '@/components/profile/watchlist'
 
-const ProfilePage = () => {
+export default function ProfilePage() {
   const { t, i18n } = useTranslation('common')
   const [profile, setProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -83,9 +84,9 @@ const ProfilePage = () => {
         animation: data?.animation || 'subtle',
         useGifAvatar: data?.use_gif_avatar || false,
         useGifBanner: data?.use_gif_banner || false,
-        publicProfile: data?.public_profile !== false,
-        showActivity: data?.show_activity !== false,
-        showStats: data?.show_stats !== false,
+        publicProfile: data?.public_profile !== false,  // Changed from public_profile
+        showActivity: data?.show_activity !== false,    // Changed from show_activity
+        showStats: data?.show_stats !== false,          // Changed from show_stats
         socialLinks: data?.social_links || {
           twitter: '',
           instagram: '',
@@ -512,540 +513,549 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <motion.div
-        initial={animationVariants.initial}
-        animate={animationVariants.animate}
-        transition={animationVariants.transition}
-      >
-        <div className="relative mb-8">
-          <div 
-            className={`h-48 rounded-lg overflow-hidden ${themeClasses.banner}`}
-            style={profile?.banner_url ? { 
-              backgroundImage: `url(${profile.banner_url})`, 
-              backgroundSize: 'cover', 
-              backgroundPosition: 'center',
-              ...(formData.animation === 'intense' ? { 
-                animation: 'pulse 8s infinite alternate' 
-              } : {})
-            } : {}}
+    <div>
+      {/* Animated gradient background */}
+      <div className="fixed inset-0">
+        <div className="absolute inset-0 animate-gradient bg-gradient-to-br from-orange-500 via-purple-500 to-blue-500 opacity-20" />
+      </div>
+
+      {/* Content with transparent cards */}
+      <div className="relative max-w-4xl mx-auto space-y-6">
+        {/* Make all cards transparent */}
+        <Card className="bg-transparent border-none shadow-none">
+          <motion.div
+            initial={animationVariants.initial}
+            animate={animationVariants.animate}
+            transition={animationVariants.transition}
           >
-            {editing && (
+            <div className="relative mb-8">
               <div 
-                {...bannerDropzone.getRootProps()} 
-                className="absolute inset-0 flex items-center justify-center bg-black/50 cursor-pointer"
+                className={`h-48 rounded-lg overflow-hidden ${themeClasses.banner}`}
+                style={profile?.banner_url ? { 
+                  backgroundImage: `url(${profile.banner_url})`, 
+                  backgroundSize: 'cover', 
+                  backgroundPosition: 'center',
+                  ...(formData.animation === 'intense' ? { 
+                    animation: 'pulse 8s infinite alternate' 
+                  } : {})
+                } : {}}
               >
-                <input {...bannerDropzone.getInputProps()} />
-                {uploadingBanner ? (
-                  <div className="text-white">{t('profile.actions.uploading')}</div>
-                ) : (
-                  <div className="text-white flex flex-col items-center">
-                    <Upload className="h-8 w-8 mb-2" />
-                    <span>{t('profile.actions.changeBanner')}</span>
+                {editing && (
+                  <div 
+                    {...bannerDropzone.getRootProps()} 
+                    className="absolute inset-0 flex items-center justify-center bg-black/50 cursor-pointer"
+                  >
+                    <input {...bannerDropzone.getInputProps()} />
+                    {uploadingBanner ? (
+                      <div className="text-white">{t('profile.actions.uploading')}</div>
+                    ) : (
+                      <div className="text-white flex flex-col items-center">
+                        <Upload className="h-8 w-8 mb-2" />
+                        <span>{t('profile.actions.changeBanner')}</span>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-            )}
-          </div>
-          
-          <div className="absolute -bottom-12 left-8 flex items-end">
-            <div className="relative">
-              <Avatar className={`h-24 w-24 ${themeClasses.avatar}`}>
-                <AvatarImage src={profile?.avatar_url} />
-                <AvatarFallback className="text-2xl">
-                  {profile?.username?.charAt(0)?.toUpperCase() || 'U'}
-                </AvatarFallback>
-              </Avatar>
               
-              {editing && (
-                <div 
-                  {...avatarDropzone.getRootProps()} 
-                  className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer"
-                >
-                  <input {...avatarDropzone.getInputProps()} />
-                  {uploadingAvatar ? (
-                    <div className="text-white text-xs">{t('common.profile.uploading')}</div>
-                  ) : (
-                    <ImageIcon className="h-6 w-6 text-white" />
+              <div className="absolute -bottom-12 left-8 flex items-end">
+                <div className="relative">
+                  <Avatar className={`h-24 w-24 ${themeClasses.avatar}`}>
+                    <AvatarImage src={profile?.avatar_url} />
+                    <AvatarFallback className="text-2xl">
+                      {profile?.username?.charAt(0)?.toUpperCase() || 'U'}
+                    </AvatarFallback>
+                  </Avatar>
+                  
+                  {editing && (
+                    <div 
+                      {...avatarDropzone.getRootProps()} 
+                      className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer"
+                    >
+                      <input {...avatarDropzone.getInputProps()} />
+                      {uploadingAvatar ? (
+                        <div className="text-white text-xs">{t('common.profile.uploading')}</div>
+                      ) : (
+                        <ImageIcon className="h-6 w-6 text-white" />
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
-            
-            <div className="ml-4 mb-2">
-              <Badge variant="outline" className="bg-background">
-                {profile?.points || 0} {t('profile.stats.points')}
-              </Badge>
-            </div>
-          </div>
-          
-          <div className="absolute right-4 top-4">
-            <Button
-              variant="outline"
-              size="sm"
-              className="bg-background/80 backdrop-blur-sm"
-              onClick={() => editing ? updateProfile() : setEditing(true)}
-            >
-              {editing ? (
-                <>
-                  <Save className="h-4 w-4 mr-2" />
-                  {t('profile.actions.save')}
-                </>
-              ) : (
-                <>
-                  <Edit className="h-4 w-4 mr-2" />
-                  {t('profile.actions.edit')}
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
-        
-        <div className="mt-16 space-y-6">
-          {editing ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('profile.actions.edit')}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <Tabs defaultValue="basic">
-                  <TabsList className="mb-4">
-                    <TabsTrigger value="basic">
-                      <User className="h-4 w-4 mr-2" />
-                      {t('profile.sections.basic')}
-                    </TabsTrigger>
-                    <TabsTrigger value="customization">
-                      <Palette className="h-4 w-4 mr-2" />
-                      {t('profile.sections.customization')}
-                    </TabsTrigger>
-                    <TabsTrigger value="social">
-                      <LinkIcon className="h-4 w-4 mr-2" />
-                      {t('profile.sections.social')}
-                    </TabsTrigger>
-                    <TabsTrigger value="privacy">
-                      <Settings className="h-4 w-4 mr-2" />
-                      {t('profile.sections.privacy')}
-                    </TabsTrigger>
-                  </TabsList>
-                  
-                  <TabsContent value="basic" className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>{t('profile.form.username')}</Label>
-                      <Input
-                        value={formData.username}
-                        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                        placeholder={t('profile.form.usernamePlaceholder')}
-                      />
-                      <p className="text-xs text-muted-foreground">{t('profile.form.usernameDescription')}</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>{t('profile.form.displayName')}</Label>
-                      <Input
-                        value={formData.displayName}
-                        onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                        placeholder={t('profile.form.displayNamePlaceholder')}
-                      />
-                      <p className="text-xs text-muted-foreground">{t('profile.form.displayNameDescription')}</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>{t('profile.form.bio')}</Label>
-                      <Textarea
-                        value={formData.bio}
-                        onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                        placeholder={t('profile.form.bioPlaceholder')}
-                        rows={4}
-                      />
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="customization" className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>{t('profile.customization.themes')}</Label>
-                      <Select 
-                        value={formData.theme} 
-                        onValueChange={(value) => setFormData({ ...formData, theme: value })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('profile.form.themePlaceholder')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Object.entries(t('profile.themes', { returnObjects: true })).map(([key, value]) => (
-                            <SelectItem key={key} value={key}>{value}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>{t('profile.animations.title')}</Label>
-                      <Select 
-                        value={formData.animation} 
-                        onValueChange={(value) => setFormData({ ...formData, animation: value })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('profile.form.animationPlaceholder')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Object.entries(t('profile.animations', { returnObjects: true }))
-                            .filter(([key]) => key !== 'title')
-                            .map(([key, value]) => (
-                              <SelectItem key={key} value={key}>{value}</SelectItem>
-                            ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="space-y-4 pt-2">
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label>{t('profile.features.gifAvatar')}</Label>
-                          <p className="text-xs text-muted-foreground">{t('profile.features.gifAvatarDescription')}</p>
-                        </div>
-                        <Switch 
-                          checked={formData.useGifAvatar}
-                          onCheckedChange={(checked) => setFormData({ ...formData, useGifAvatar: checked })}
-                        />
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                          <Label>{t('profile.features.gifBanner')}</Label>
-                          <p className="text-xs text-muted-foreground">{t('profile.features.gifBannerDescription')}</p>
-                        </div>
-                        <Switch 
-                          checked={formData.useGifBanner}
-                          onCheckedChange={(checked) => setFormData({ ...formData, useGifBanner: checked })}
-                        />
-                      </div>
-                    </div>
-                    
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={resetToDefaults}
-                      className="mt-4"
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      {t('profile.actions.resetDefaults')}
-                    </Button>
-                  </TabsContent>
-                  
-                  <TabsContent value="social" className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Twitter</Label>
-                      <Input
-                        value={formData.socialLinks.twitter}
-                        onChange={(e) => setFormData({ 
-                          ...formData, 
-                          socialLinks: { 
-                            ...formData.socialLinks, 
-                            twitter: e.target.value 
-                          } 
-                        })}
-                        placeholder="@username"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>Instagram</Label>
-                      <Input
-                        value={formData.socialLinks.instagram}
-                        onChange={(e) => setFormData({ 
-                          ...formData, 
-                          socialLinks: { 
-                            ...formData.socialLinks, 
-                            instagram: e.target.value 
-                          } 
-                        })}
-                        placeholder="@username"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>Website</Label>
-                      <Input
-                        value={formData.socialLinks.website}
-                        onChange={(e) => setFormData({ 
-                          ...formData, 
-                          socialLinks: { 
-                            ...formData.socialLinks, 
-                            website: e.target.value 
-                          } 
-                        })}
-                        placeholder="https://example.com"
-                      />
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="privacy" className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <Label>{t('profile.privacy.publicProfile')}</Label>
-                        <p className="text-xs text-muted-foreground">{t('profile.privacy.publicProfileDescription')}</p>
-                      </div>
-                      <Switch 
-                        checked={formData.publicProfile}
-                        onCheckedChange={(checked) => setFormData({ ...formData, publicProfile: checked })}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <Label>{t('profile.privacy.showActivity')}</Label>
-                        <p className="text-xs text-muted-foreground">{t('profile.privacy.showActivityDescription')}</p>
-                      </div>
-                      <Switch 
-                        checked={formData.showActivity}
-                        onCheckedChange={(checked) => setFormData({ ...formData, showActivity: checked })}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <Label>{t('profile.privacy.showStats')}</Label>
-                        <p className="text-xs text-muted-foreground">{t('profile.privacy.showStatsDescription')}</p>
-                      </div>
-                      <Switch 
-                        checked={formData.showStats}
-                        onCheckedChange={(checked) => setFormData({ ...formData, showStats: checked })}
-                      />
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          ) : (
-            <div>
-              <h1 className="text-3xl font-bold">
-                {profile?.display_name || profile?.username}
-                {profile?.social_links?.twitter && (
-                  <a 
-                    href={`https://twitter.com/${profile.social_links.twitter}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="ml-2 inline-flex items-center text-blue-500 hover:text-blue-600"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 0" fill="currentColor" className="h-5 w-5">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-                    </svg>
-                  </a>
-                )}
-              </h1>
-              <p className="text-muted-foreground mt-2">
-                {profile?.bio || t('profile.noBioText')}
-              </p>
-              <div className="flex items-center mt-4 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4 mr-1" />
-                <span>
-                  {t('profile.memberSince', { 
-                    date: profile?.created_at ? formatDate(profile.created_at) : '',
-                    interpolation: { escapeValue: false }
-                  })}
-                </span>
+                
+                <div className="ml-4 mb-2">
+                  <Badge variant="outline" className="bg-background">
+                    {profile?.points || 0} {t('profile.stats.points')}
+                  </Badge>
+                </div>
               </div>
               
-              {(profile?.social_links?.instagram || profile?.social_links?.website) && (
-                <div className="flex gap-3 mt-3">
-                  {profile?.social_links?.instagram && (
-                    <a 
-                      href={`https://instagram.com/${profile.social_links.instagram}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-pink-500 hover:text-pink-600"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                      </svg>
-                    </a>
+              <div className="absolute right-4 top-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="bg-background/80 backdrop-blur-sm"
+                  onClick={() => editing ? updateProfile() : setEditing(true)}
+                >
+                  {editing ? (
+                    <>
+                      <Save className="h-4 w-4 mr-2" />
+                      {t('profile.actions.save')}
+                    </>
+                  ) : (
+                    <>
+                      <Edit className="h-4 w-4 mr-2" />
+                      {t('profile.actions.edit')}
+                    </>
                   )}
+                </Button>
+              </div>
+            </div>
+            
+            <div className="mt-16 space-y-6">
+              {editing ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{t('profile.actions.edit')}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <Tabs defaultValue="basic">
+                      <TabsList className="mb-4">
+                        <TabsTrigger value="basic">
+                          <User className="h-4 w-4 mr-2" />
+                          {t('profile.sections.basic')}
+                        </TabsTrigger>
+                        <TabsTrigger value="customization">
+                          <Palette className="h-4 w-4 mr-2" />
+                          {t('profile.sections.customization')}
+                        </TabsTrigger>
+                        <TabsTrigger value="social">
+                          <LinkIcon className="h-4 w-4 mr-2" />
+                          {t('profile.sections.social')}
+                        </TabsTrigger>
+                        <TabsTrigger value="privacy">
+                          <Settings className="h-4 w-4 mr-2" />
+                          {t('profile.sections.privacy')}
+                        </TabsTrigger>
+                      </TabsList>
+                      
+                      <TabsContent value="basic" className="space-y-4">
+                        <div className="space-y-2">
+                          <Label>{t('profile.form.username')}</Label>
+                          <Input
+                            value={formData.username}
+                            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                            placeholder={t('profile.form.usernamePlaceholder')}
+                          />
+                          <p className="text-xs text-muted-foreground">{t('profile.form.usernameDescription')}</p>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>{t('profile.form.displayName')}</Label>
+                          <Input
+                            value={formData.displayName}
+                            onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+                            placeholder={t('profile.form.displayNamePlaceholder')}
+                          />
+                          <p className="text-xs text-muted-foreground">{t('profile.form.displayNameDescription')}</p>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>{t('profile.form.bio')}</Label>
+                          <Textarea
+                            value={formData.bio}
+                            onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+                            placeholder={t('profile.form.bioPlaceholder')}
+                            rows={4}
+                          />
+                        </div>
+                      </TabsContent>
+                      
+                      <TabsContent value="customization" className="space-y-4">
+                        <div className="space-y-2">
+                          <Label>{t('profile.customization.themes')}</Label>
+                          <Select 
+                            value={formData.theme} 
+                            onValueChange={(value) => setFormData({ ...formData, theme: value })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={t('profile.form.themePlaceholder')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(t('profile.themes', { returnObjects: true })).map(([key, value]) => (
+                                <SelectItem key={key} value={key}>{value}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>{t('profile.animations.title')}</Label>
+                          <Select 
+                            value={formData.animation} 
+                            onValueChange={(value) => setFormData({ ...formData, animation: value })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder={t('profile.form.animationPlaceholder')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(t('profile.animations', { returnObjects: true }))
+                                .filter(([key]) => key !== 'title')
+                                .map(([key, value]) => (
+                                  <SelectItem key={key} value={key}>{value}</SelectItem>
+                                ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-4 pt-2">
+                          <div className="flex items-center justify-between">
+                            <div className="space-y-0.5">
+                              <Label>{t('profile.features.gifAvatar')}</Label>
+                              <p className="text-xs text-muted-foreground">{t('profile.features.gifAvatarDescription')}</p>
+                            </div>
+                            <Switch 
+                              checked={formData.useGifAvatar}
+                              onCheckedChange={(checked) => setFormData({ ...formData, useGifAvatar: checked })}
+                            />
+                          </div>
+                          
+                          <div className="flex items-center justify-between">
+                            <div className="space-y-0.5">
+                              <Label>{t('profile.features.gifBanner')}</Label>
+                              <p className="text-xs text-muted-foreground">{t('profile.features.gifBannerDescription')}</p>
+                            </div>
+                            <Switch 
+                              checked={formData.useGifBanner}
+                              onCheckedChange={(checked) => setFormData({ ...formData, useGifBanner: checked })}
+                            />
+                          </div>
+                        </div>
+                        
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={resetToDefaults}
+                          className="mt-4"
+                        >
+                          <RefreshCw className="h-4 w-4 mr-2" />
+                          {t('profile.actions.resetDefaults')}
+                        </Button>
+                      </TabsContent>
+                      
+                      <TabsContent value="social" className="space-y-4">
+                        <div className="space-y-2">
+                          <Label>Twitter</Label>
+                          <Input
+                            value={formData.socialLinks.twitter}
+                            onChange={(e) => setFormData({ 
+                              ...formData, 
+                              socialLinks: { 
+                                ...formData.socialLinks, 
+                                twitter: e.target.value 
+                              } 
+                            })}
+                            placeholder="@username"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>Instagram</Label>
+                          <Input
+                            value={formData.socialLinks.instagram}
+                            onChange={(e) => setFormData({ 
+                              ...formData, 
+                              socialLinks: { 
+                                ...formData.socialLinks, 
+                                instagram: e.target.value 
+                              } 
+                            })}
+                            placeholder="@username"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label>Website</Label>
+                          <Input
+                            value={formData.socialLinks.website}
+                            onChange={(e) => setFormData({ 
+                              ...formData, 
+                              socialLinks: { 
+                                ...formData.socialLinks, 
+                                website: e.target.value 
+                              } 
+                            })}
+                            placeholder="https://example.com"
+                          />
+                        </div>
+                      </TabsContent>
+                      
+                      <TabsContent value="privacy" className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="space-y-0.5">
+                            <Label>{t('profile.privacy.publicProfile')}</Label>
+                            <p className="text-xs text-muted-foreground">{t('profile.privacy.publicProfileDescription')}</p>
+                          </div>
+                          <Switch 
+                            checked={formData.publicProfile}
+                            onCheckedChange={(checked) => setFormData({ ...formData, publicProfile: checked })}
+                          />
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="space-y-0.5">
+                            <Label>{t('profile.privacy.showActivity')}</Label>
+                            <p className="text-xs text-muted-foreground">{t('profile.privacy.showActivityDescription')}</p>
+                          </div>
+                          <Switch 
+                            checked={formData.showActivity}
+                            onCheckedChange={(checked) => setFormData({ ...formData, showActivity: checked })}
+                          />
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="space-y-0.5">
+                            <Label>{t('profile.privacy.showStats')}</Label>
+                            <p className="text-xs text-muted-foreground">{t('profile.privacy.showStatsDescription')}</p>
+                          </div>
+                          <Switch 
+                            checked={formData.showStats}
+                            onCheckedChange={(checked) => setFormData({ ...formData, showStats: checked })}
+                          />
+                        </div>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div>
+                  <h1 className="text-3xl font-bold">
+                    {profile?.display_name || profile?.username}
+                    {profile?.social_links?.twitter && (
+                      <a 
+                        href={`https://twitter.com/${profile.social_links.twitter}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="ml-2 inline-flex items-center text-blue-500 hover:text-blue-600"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 0" fill="currentColor" className="h-5 w-5">
+                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                        </svg>
+                      </a>
+                    )}
+                  </h1>
+                  <p className="text-muted-foreground mt-2">
+                    {profile?.bio || t('profile.noBioText')}
+                  </p>
+                  <div className="flex items-center mt-4 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    <span>
+                      {t('profile.memberSince', { 
+                        date: profile?.created_at ? formatDate(profile.created_at) : '',
+                        interpolation: { escapeValue: false }
+                      })}
+                    </span>
+                  </div>
                   
-                  {profile?.social_links?.website && (
-                    <a 
-                      href={profile.social_links.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                      </svg>
-                    </a>
+                  {(profile?.social_links?.instagram || profile?.social_links?.website) && (
+                    <div className="flex gap-3 mt-3">
+                      {profile?.social_links?.instagram && (
+                        <a 
+                          href={`https://instagram.com/${profile.social_links.instagram}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-pink-500 hover:text-pink-600"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                          </svg>
+                        </a>
+                      )}
+                      
+                      {profile?.social_links?.website && (
+                        <a 
+                          href={profile.social_links.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                          </svg>
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
               )}
-            </div>
-          )}
-          
-          <Tabs defaultValue="activity" className="mt-6">
-            <TabsList>
-              <TabsTrigger value="activity">
-                <Activity className="h-4 w-4 mr-2" />
-                {t('profile.tabs.activity')}
-              </TabsTrigger>
-              <TabsTrigger value="achievements">
-                <Award className="h-4 w-4 mr-2" />
-                {t('profile.tabs.achievements')}
-              </TabsTrigger>
-              <TabsTrigger value="stats">
-                <BarChart className="h-4 w-4 mr-2" />
-                {t('profile.tabs.stats')}
-              </TabsTrigger>
-              <TabsTrigger value="watchlist">
-                <Bookmark className="h-4 w-4 mr-2" />
-                {t('profile.tabs.watchlist')}
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="activity" className="mt-4 space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('profile.activity.recent')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ActivityFeed userId={user?.id || ''} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="achievements" className="mt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('profile.tabs.achievements')}</CardTitle>
-                  <CardDescription>
-                    {achievements.filter(a => a.completed).length} {t('achievements.status.unlocked')}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                    {achievements.map((item) => {
-                      const achievementData = item.achievement;
-                      const LucideIcon = (achievementData?.icon && achievementData.icon in require('lucide-react')) 
-                        ? require('lucide-react')[achievementData.icon] 
-                        : Award;
-                      
-                      return (
+              
+              <Tabs defaultValue="activity" className="mt-6">
+                <TabsList>
+                  <TabsTrigger value="activity">
+                    <Activity className="h-4 w-4 mr-2" />
+                    {t('profile.tabs.activity')}
+                  </TabsTrigger>
+                  <TabsTrigger value="achievements">
+                    <Award className="h-4 w-4 mr-2" />
+                    {t('profile.tabs.achievements')}
+                  </TabsTrigger>
+                  <TabsTrigger value="stats">
+                    <BarChart className="h-4 w-4 mr-2" />
+                    {t('profile.tabs.stats')}
+                  </TabsTrigger>
+                  <TabsTrigger value="watchlist">
+                    <Bookmark className="h-4 w-4 mr-2" />
+                    {t('profile.tabs.watchlist')}
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="activity" className="mt-4 space-y-4">
+                  <Card className="bg-transparent border-none shadow-none">
+                    <CardHeader>
+                      <CardTitle>{t('profile.activity.recent')}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="bg-transparent">
+                      <ActivityFeed userId={user?.id || ''} />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="achievements" className="mt-4">
+                  <Card className="bg-transparent border-none shadow-none">
+                    <CardHeader>
+                      <CardTitle>{t('profile.tabs.achievements')}</CardTitle>
+                      <CardDescription>
+                        {achievements.filter(a => a.completed).length} {t('achievements.status.unlocked')}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="bg-background/30 backdrop-blur-sm rounded-b-lg">
+                      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+                        {achievements.map((item) => {
+                          const achievementData = item.achievement;
+                          const LucideIcon = (achievementData?.icon && achievementData.icon in require('lucide-react')) 
+                            ? require('lucide-react')[achievementData.icon] 
+                            : Award;
+                          
+                          return (
+                            <motion.div 
+                              key={item.id}
+                              className={`p-4 border rounded-lg ${item.completed ? `${themeClasses.highlight}` : 'bg-muted/30'}`}
+                              whileHover={{ scale: 1.02, y: -5 }}
+                              transition={{ type: "spring", stiffness: 300 }}
+                            >
+                              <div className="flex items-start gap-4">
+                                <div className={`rounded-full p-3 ${item.completed ? `${themeClasses.highlight}` : 'bg-muted'}`}>
+                                  <LucideIcon className={`h-6 w-6 ${item.completed ? themeClasses.text : 'text-muted-foreground'}`} />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex justify-between items-start">
+                                    <h3 className="font-medium">{achievementData?.name}</h3>
+                                    <Badge variant={item.completed ? "default" : "outline"}>
+                                      {achievementData?.points} {t('common.achievements.points')}
+                                    </Badge>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground mt-1">{achievementData?.description}</p>
+                                  
+                                  {!item.completed && (
+                                    <div className="mt-2">
+                                      <div className="flex justify-between text-xs mb-1">
+                                        <span>{t('common.achievements.progress')}</span>
+                                        <span>{item.progress} / {achievementData?.criteria_value}</span>
+                                      </div>
+                                      <Progress value={(item.progress / achievementData?.criteria_value) * 100} />
+                                    </div>
+                                  )}
+                                  
+                                  {item.completed && item.completed_at && (
+                                    <p className="text-xs text-muted-foreground mt-2">
+                                      {t('common.achievements.earnedOn')} {format(new Date(item.completed_at), 'PP')}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="stats" className="mt-4">
+                  <Card className="bg-transparent border-none shadow-none">
+                    <CardHeader>
+                      <CardTitle>{t('profile.stats.title')}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="bg-background/30 backdrop-blur-sm rounded-b-lg">
+                      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
                         <motion.div 
-                          key={item.id}
-                          className={`p-4 border rounded-lg ${item.completed ? `${themeClasses.highlight}` : 'bg-muted/30'}`}
-                          whileHover={{ scale: 1.02, y: -5 }}
+                          className="p-4 border rounded-lg"
+                          whileHover={{ y: -5 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
-                          <div className="flex items-start gap-4">
-                            <div className={`rounded-full p-3 ${item.completed ? `${themeClasses.highlight}` : 'bg-muted'}`}>
-                              <LucideIcon className={`h-6 w-6 ${item.completed ? themeClasses.text : 'text-muted-foreground'}`} />
+                          <div className="flex items-center gap-3">
+                            <div className={`rounded-full p-2 ${themeClasses.highlight}`}>
+                              <Film className={`h-5 w-5 ${themeClasses.text}`} />
                             </div>
-                            <div className="flex-1">
-                              <div className="flex justify-between items-start">
-                                <h3 className="font-medium">{achievementData?.name}</h3>
-                                <Badge variant={item.completed ? "default" : "outline"}>
-                                  {achievementData?.points} {t('common.achievements.points')}
-                                </Badge>
-                              </div>
-                              <p className="text-sm text-muted-foreground mt-1">{achievementData?.description}</p>
-                              
-                              {!item.completed && (
-                                <div className="mt-2">
-                                  <div className="flex justify-between text-xs mb-1">
-                                    <span>{t('common.achievements.progress')}</span>
-                                    <span>{item.progress} / {achievementData?.criteria_value}</span>
-                                  </div>
-                                  <Progress value={(item.progress / achievementData?.criteria_value) * 100} />
-                                </div>
-                              )}
-                              
-                              {item.completed && item.completed_at && (
-                                <p className="text-xs text-muted-foreground mt-2">
-                                  {t('common.achievements.earnedOn')} {format(new Date(item.completed_at), 'PP')}
-                                </p>
-                              )}
+                            <div>
+                              <p className="text-sm text-muted-foreground">{t('profile.stats.watchedMovies')}</p>
+                              <p className="text-2xl font-bold">{stats.watchedMovies}</p>
                             </div>
                           </div>
                         </motion.div>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="stats" className="mt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('profile.stats.title')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-                    <motion.div 
-                      className="p-4 border rounded-lg"
-                      whileHover={{ y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`rounded-full p-2 ${themeClasses.highlight}`}>
-                          <Film className={`h-5 w-5 ${themeClasses.text}`} />
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">{t('profile.stats.watchedMovies')}</p>
-                          <p className="text-2xl font-bold">{stats.watchedMovies}</p>
-                        </div>
+                        
+                        <motion.div 
+                          className="p-4 border rounded-lg"
+                          whileHover={{ y: -5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`rounded-full p-2 ${themeClasses.highlight}`}>
+                              <Tv className={`h-5 w-5 ${themeClasses.text}`} />
+                            </div>
+                            <div>
+                              <p className="text-sm text-muted-foreground">{t('profile.stats.watchedShows')}</p>
+                              <p className="text-2xl font-bold">{stats.watchedShows}</p>
+                            </div>
+                          </div>
+                        </motion.div>
+                        
+                        <motion.div 
+                          className="p-4 border rounded-lg"
+                          whileHover={{ y: -5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`rounded-full p-2 ${themeClasses.highlight}`}>
+                              <Star className={`h-5 w-5 ${themeClasses.text}`} />
+                            </div>
+                            <div>
+                              <p className="text-sm text-muted-foreground">{t('profile.stats.totalRatings')}</p>
+                              <p className="text-2xl font-bold">{stats.totalRatings}</p>
+                            </div>
+                          </div>
+                        </motion.div>
                       </div>
-                    </motion.div>
-                    
-                    <motion.div 
-                      className="p-4 border rounded-lg"
-                      whileHover={{ y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`rounded-full p-2 ${themeClasses.highlight}`}>
-                          <Tv className={`h-5 w-5 ${themeClasses.text}`} />
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">{t('profile.stats.watchedShows')}</p>
-                          <p className="text-2xl font-bold">{stats.watchedShows}</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                    
-                    <motion.div 
-                      className="p-4 border rounded-lg"
-                      whileHover={{ y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`rounded-full p-2 ${themeClasses.highlight}`}>
-                          <Star className={`h-5 w-5 ${themeClasses.text}`} />
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">{t('profile.stats.totalRatings')}</p>
-                          <p className="text-2xl font-bold">{stats.totalRatings}</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-            <TabsContent value="watchlist" className="mt-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{t('profile.watchlist.title')}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Watchlist userId={user?.id || ''} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </motion.div>
+                <TabsContent value="watchlist" className="mt-4">
+                  <Card className="bg-transparent border-none shadow-none">
+                    <CardHeader>
+                      <CardTitle>{t('profile.watchlist.title')}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="bg-background/30 backdrop-blur-sm rounded-b-lg">
+                      <Watchlist userId={user?.id || ''} />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </motion.div>
+        </Card>
+      </div>
     </div>
   )
 }
-
-export default ProfilePage;
