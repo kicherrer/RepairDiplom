@@ -1,0 +1,22 @@
+{
+  "overview": {
+    "title": "Overview"
+  },
+  "media": {
+    "types": {
+      "movie": "Movie",
+      "tv": "TV Show"
+    }
+  },
+  "imageAlt": {
+    "poster": "Poster for {{title}}"
+  },
+  "admin": {
+    "delete": {
+      "title": "Delete media",
+      "description": "Are you sure you want to delete {{title}}? This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    }
+  }
+}

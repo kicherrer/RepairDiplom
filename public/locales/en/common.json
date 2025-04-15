@@ -1,0 +1,466 @@
+{
+  "common": {
+    "loading": "Loading..."
+  },
+  "navigation": {
+    "home": "Home",
+    "discover": "Discover",
+    "profile": "Profile",
+    "achievements": "Achievements",
+    "admin": "Admin",
+    "overview": "Overview"
+  },
+  "home": {
+    "title": "Your Personal Media Library",
+    "subtitle": "Track and discover your favorite movies and shows",
+    "startExploring": "Start Exploring",
+    "startWatching": "Start Watching",
+    "notStarted": "Haven't started watching yet?",
+    "notStartedWatching": "Haven't started watching yet?",
+    "features": {
+      "catalog": {
+        "title": "Browse Catalog",
+        "description": "Explore our vast collection of movies and shows"
+      },
+      "recommendations": {
+        "title": "Get Recommendations",
+        "description": "Discover new content based on your preferences"
+      },
+      "profiles": {
+        "title": "Personal Profile",
+        "description": "Track your watching history and favorites"
+      },
+      "ratings": {
+        "title": "Rate & Review",
+        "description": "Share your opinions and read others' reviews"
+      }
+    },
+    "discoverTitle": "Explore Categories",
+    "movies": "Movies",
+    "moviesDescription": "From classics to latest releases",
+    "browseMovies": "Browse Movies",
+    "tvShows": "TV Shows",
+    "tvShowsDescription": "Best series from around the world",
+    "browseTVShows": "Browse TV Shows",
+    "documentaries": "Documentaries",
+    "documentariesDescription": "Discover fascinating stories",
+    "browseDocumentaries": "Browse Documentaries",
+    "trackProgress": "Track Your Progress",
+    "trackProgressDescription": "Keep track of what you watch and earn achievements",
+    "viewAchievements": "View Achievements",
+    "trackMovies": "Track Movies",
+    "getRecommendations": "Get Recommendations",
+    "rateContent": "Rate Content",
+    "earnAchievements": "Earn Achievements",
+    "discover": {
+      "title": "Discover",
+      "description": "Find new movies and shows"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "activitySection": "Activity",
+    "achievements": "Achievements",
+    "statistics": "Statistics",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "editProfile": "Edit Profile",
+    "memberSince": "Member since {{date}}",
+    "noBio": "No bio yet",
+    "settings": {
+      "title": "Settings",
+      "basic": "Basic Info",
+      "customization": "Customization",
+      "social": "Social",
+      "privacy": "Privacy"
+    },
+    "form": {
+      "username": "Username",
+      "usernamePlaceholder": "Enter username",
+      "usernameDescription": "Your unique username",
+      "displayName": "Display Name",
+      "displayNamePlaceholder": "How others will see you",
+      "displayNameDescription": "Name shown to other users",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us about yourself",
+      "themes": "Theme",
+      "themePlaceholder": "Select a theme"
+    },
+    "themes": {
+      "default": "Default",
+      "dark": "Dark",
+      "neon": "Neon",
+      "minimal": "Minimal",
+      "retro": "Retro",
+      "nature": "Nature",
+      "space": "Space"
+    },
+    "animations": {
+      "title": "Animations",
+      "none": "None",
+      "subtle": "Subtle",
+      "moderate": "Moderate",
+      "intense": "Intense"
+    },
+    "features": {
+      "gifAvatar": "GIF Avatar",
+      "gifAvatarDescription": "Allow animated avatar",
+      "gifBanner": "GIF Banner",
+      "gifBannerDescription": "Allow animated banner"
+    },
+    "privacy": {
+      "publicProfile": "Public Profile",
+      "publicProfileDescription": "Allow others to view your profile",
+      "showActivity": "Show Activity",
+      "showActivityDescription": "Show your activity to others",
+      "showStats": "Show Statistics",
+      "showStatsDescription": "Show your statistics to others"
+    },
+    "stats": {
+      "title": "Statistics",
+      "watchedMovies": "Watched Movies",
+      "watchedShows": "Watched Shows",
+      "totalRatings": "Total Ratings",
+      "points": "points"
+    },
+    "activity": {
+      "recent": "Recent Activity",
+      "watched": "watched",
+      "ratingAction": "rated",
+      "reviewed": "reviewed",
+      "daysAgo": "days ago",
+      "weekAgo": "week ago",
+      "gaveIt": "gave it",
+      "stars": "stars",
+      "addedToWatchedList": "added to watched list",
+      "addedAReview": "added a review",
+      "ratedMedia": "Rated &ldquo;{{title}}&rdquo; {{rating}} stars",
+      "watchedMedia": "Watched &ldquo;{{title}}&rdquo;",
+      "commentedMedia": "Commented on &ldquo;{{title}}&rdquo;",
+      "statusUpdate": {
+        "watching": "Started watching \"{{title}}\"",
+        "plan_to_watch": "Added \"{{title}}\" to Plan to Watch list",
+        "completed": "Completed watching \"{{title}}\""
+      }
+    },
+    "actions": {
+      "changeBanner": "Change Banner",
+      "changeAvatar": "Change Avatar",
+      "uploading": "Uploading...",
+      "resetDefaults": "Reset to Defaults",
+      "edit": "Edit",
+      "save": "Save",
+      "upload": "Upload"
+    },
+    "points": "points",
+    "noBioText": "No bio yet",
+    "memberSinceText": "Member since",
+    "tabs": {
+      "activity": "Activity",
+      "achievements": "Achievements",
+      "stats": "Statistics",
+      "settings": "Settings",
+      "watchlist": "My Lists"
+    },
+    "sections": {
+      "basic": "Basic Info",
+      "customization": "Customization",
+      "social": "Social",
+      "privacy": "Privacy"
+    },
+    "customization": {
+      "themes": "Themes",
+      "animations": "Animations",
+      "gifAvatar": "GIF Avatar",
+      "gifAvatarDescription": "Allow animated avatar",
+      "gifBanner": "GIF Banner",
+      "gifBannerDescription": "Allow animated banner"
+    },
+    "messages": {
+      "saveSuccess": "Profile saved successfully",
+      "saveError": "Failed to save profile",
+      "avatarError": "Failed to upload avatar",
+      "bannerError": "Failed to upload banner",
+      "avatarUpdated": "Avatar updated successfully",
+      "bannerUpdated": "Banner updated successfully"
+    },
+    "watchlist": {
+      "title": "My Lists",
+      "watching": "Watching",
+      "planToWatch": "Plan to Watch",
+      "completed": "Completed",
+      "empty": "List is empty"
+    }
+  },
+  "achievements": {
+    "title": "Achievements",
+    "total": "Total Achievements",
+    "unlocked": "Unlocked",
+    "locked": "Locked",
+    "progress": "Progress",
+    "points": "points",
+    "earnedOn": "Earned on",
+    "all": "All",
+    "trackProgress": "Track your progress and earn rewards for your activity",
+    "noAchievements": "You haven't unlocked any achievements yet",
+    "keepUsing": "Continue using MediaVault to earn achievements and rewards",
+    "allUnlocked": "All achievements unlocked!",
+    "congratulations": "Congratulations! You've unlocked all available achievements.",
+    "tabs": {
+      "all": "All",
+      "unlocked": "Unlocked",
+      "locked": "Locked"
+    },
+    "empty": {
+      "unlocked": "No achievements unlocked",
+      "locked": "No locked achievements",
+      "description": "Keep using the app to earn achievements"
+    },
+    "status": {
+      "unlocked": "unlocked",
+      "total": "total"
+    }
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "users": {
+      "title": "Users",
+      "makeAdmin": "Make Admin",
+      "removeAdmin": "Remove Admin",
+      "lastActive": "Last Active"
+    },
+    "media": {
+      "title": "Media Content",
+      "edit": "Edit",
+      "add": "Add",
+      "delete": "Delete",
+      "type": "Type",
+      "status": "Status",
+      "addNew": "Add New Content",
+      "backToAdmin": "Back to Admin",
+      "form": {
+        "title": "Title",
+        "titlePlaceholder": "Enter title",
+        "originalTitle": "Original Title",
+        "originalTitlePlaceholder": "Enter original title",
+        "type": "Type",
+        "description": "Description",
+        "descriptionPlaceholder": "Enter description",
+        "year": "Year",
+        "duration": "Duration",
+        "durationPlaceholder": "Duration in minutes",
+        "actors": "Actors",
+        "actorName": "Actor Name",
+        "actorNamePlaceholder": "Enter actor name",
+        "character": "Character",
+        "characterPlaceholder": "Enter character name",
+        "photo": "Photo",
+        "chooseFile": "Choose file",
+        "noFileChosen": "No file chosen",
+        "addActor": "Add Actor",
+        "removeActor": "Remove Actor",
+        "directors": "Directors",
+        "directorName": "Director Name",
+        "directorNamePlaceholder": "Enter director name",
+        "addDirector": "Add Director",
+        "removeDirector": "Remove Director",
+        "poster": "Poster",
+        "video": "Video",
+        "submit": "Add Media",
+        "submitting": "Adding...",
+        "movie": "Movie",
+        "tv": "TV Show",
+        "fileInputLabels": {
+          "chooseFile": "Choose file",
+          "noFileChosen": "No file chosen",
+          "browse": "Browse"
+        },
+        "photoPlaceholder": "Choose photo",
+        "name": "Name",
+        "namePlaceholder": "Enter name"
+      }
+    },
+    "stats": {
+      "totalUsers": "Total Users",
+      "totalMedia": "Total Media",
+      "adminUsers": "Admin Users",
+      "activeToday": "Active Today",
+      "newThisWeek": "New This Week"
+    },
+    "delete": {
+      "title": "Delete Media",
+      "description": "Are you sure you want to delete {{title}}?",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "success": "Media deleted successfully",
+      "error": "Failed to delete media"
+    }
+  },
+  "loading": "Loading...",
+  "errors": {
+    "fetchFailed": "Failed to fetch data",
+    "updateFailed": "Failed to update",
+    "accessDenied": "Access denied"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm"
+  },
+  "ui": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "empty": "No data",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "apply": "Apply",
+    "clear": "Clear",
+    "more": "More",
+    "less": "Less"
+  },
+  "discover": {
+    "search": "Search",
+    "filters": "Filters",
+    "searchPlaceholder": "Search movies and TV shows...",
+    "filter": {
+      "title": "Filters",
+      "searchLabel": "Search",
+      "category": "Category",
+      "genre": "Genre",
+      "year": "Year",
+      "rating": "Rating",
+      "apply": "Apply",
+      "clear": "Clear",
+      "minRating": "Minimum Rating",
+      "all": "All",
+      "movies": "Movies",
+      "tvShows": "TV Shows"
+    },
+    "sort": {
+      "rating": "By Rating",
+      "views": "By Views",
+      "newest": "Newest First",
+      "oldest": "Oldest First"
+    },
+    "empty": {
+      "title": "No Results Found",
+      "description": "Try adjusting your search parameters"
+    },
+    "loading": "Loading results..."
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "createAccount": "Create Account",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "signOut": "Sign Out",
+    "welcomeBack": "Welcome back!",
+    "welcomeMessage": "Welcome to MediaVault",
+    "appTitle": "MediaVault - Your Media Library",
+    "continueMessage": "Sign in to your account to continue",
+    "getStartedMessage": "Create a new account to get started",
+    "forgotPassword": "Forgot password?",
+    "joinUs": "Join Us",
+    "passwordRequirements": "Password must be at least 8 characters",
+    "confirmPassword": "Confirm Password",
+    "email": "Email",
+    "password": "Password",
+    "orContinueWith": "or continue with",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "register": "Register",
+    "resetPassword": "Reset Password",
+    "resetPasswordMessage": "Enter your email to reset your password",
+    "back": "Back",
+    "sendResetLink": "Send Reset Link",
+    "success": "Success!",
+    "signedInSuccess": "Signed in successfully",
+    "authSuccess": "You have been authenticated successfully",
+    "redirecting": "Redirecting to homepage..."
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "watch": {
+    "about": "About",
+    "watch": "Watch Now",
+    "castAndCrew": "Cast & Crew",
+    "cast": "Cast",
+    "directors": "Directors",
+    "rating": "Rating",
+    "comments": "Comments",
+    "addComment": "Add a comment...",
+    "submit": "Submit",
+    "points": "points",
+    "noRating": "No rating yet",
+    "rateThis": "Rate this",
+    "login": {
+      "required": "Please log in to rate",
+      "requiredComment": "Please log in to comment"
+    },
+    "success": {
+      "rating": "Rating saved successfully",
+      "comment": "Comment added successfully"
+    },
+    "error": {
+      "rating": "Failed to save rating",
+      "comment": "Failed to add comment",
+      "alreadyRated": "You have already rated this"
+    },
+    "watchNow": "Watch Now",
+    "addToWatchlist": "Add to Watchlist",
+    "yourRating": "Your Rating",
+    "yourScore": "Your Score",
+    "watchStatus": {
+      "title": "Watch Status",
+      "watching": "Currently Watching",
+      "plan_to_watch": "Plan to Watch",
+      "completed": "Completed",
+      "updated": "Status updated"
+    },
+    "year": "Year",
+    "duration": "Duration",
+    "status": {
+      "watching": "Currently Watching",
+      "plan_to_watch": "Plan to Watch",
+      "completed": "Completed",
+      "updated": "Watch status updated",
+      "planToWatch": "Plan to Watch"
+    }
+  },
+  "media": {
+    "types": {
+      "movie": "Movie",
+      "tv": "TV Show",
+      "documentary": "Documentary"
+    },
+    "minutes": "min"
+  },
+  "imageAlt": {
+    "poster": "Poster for {{title}}"
+  },
+  "comments": {
+    "title": "Comments",
+    "placeholder": "Write a comment...",
+    "submit": "Submit",
+    "noComments": "No comments yet. Be the first to comment!"
+  },
+  "overview": {
+    "hero": {
+      "title": "Welcome to Movie Library",
+      "subtitle": "Discover your next favorite movie or TV show"
+    },
+    "featured": "Featured",
+    "allTypes": "All Types",
+    "continueWatching": "Continue Watching",
+    "recommended": "Recommended for You"
+  }
+}
